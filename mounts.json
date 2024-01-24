@@ -1,0 +1,22 @@
+[
+  {
+    "fs": "OneDrive:",
+    "mountPoint": "/hostfs/onedrive/onedrive_0",
+    "mountOpt": {
+      "AllowOther": true
+    },
+    "vfsOpt": {
+      "CacheMode": "full"
+    }
+  },
+  {
+    "fs": "GoogleDrive:",
+    "mountPoint": "/hostfs/gdrive/grive_0",
+    "mountOpt": {
+      "AllowOther": true
+    },
+    "vfsOpt": {
+      "CacheMode": "full"
+    }
+  }
+]

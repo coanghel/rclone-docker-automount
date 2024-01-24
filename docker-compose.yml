@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    volumes:
+      - ./config:/config/rclone
+      - ./logs:/logs
+      - ./cache:/root/.cache/rclone # This is for the WebUI, not VFS
+      - /:/hostfs:rshared
+      - /var/cache/rclone:/vfsCache
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /etc/fuse.conf:/etc/fuse.conf:ro
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    command:
+      - rcd
+      - --rc-web-gui
+      - --rc-web-gui-no-open-browser
+      - --rc-addr=:5572
+      - --rc-user=AGOODUSERNAME
+      - --rc-pass=AGOODPASSWORD
+      - --log-file=/logs/rclone.log
+      - --log-level=NOTICE
+      - --cache-dir=/vfsCache
+    networks:
+      - reverse-proxy-network # Optional
+      - rclone-net
+    # If not using reverse proxy, provide a host:container port for --rc-addr
+    #ports:
+    #  - 5572:5572
+    environment:
+      - TZ=America/New_York
+    restart: unless-stopped
+  rclone_initializer:
+    image: ghcr.io/coanghel/rclone-docker-automount/rclone-init:latest
+    container_name: rclone_initializer
+    environment:
+      - RCLONE_USERNAME=AGOODUSERNAME
+      - RCLONE_PASSWORD=AGOODPASSWORD
+      - RCLONE_PORT=5572
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped
+    depends_on:
+      - rclone
+    networks:
+      - rclone-net
+networks:
+  reverse-proxy-network:
+    name: reverse-proxy-network
+    external: true
+  rclone-net:
