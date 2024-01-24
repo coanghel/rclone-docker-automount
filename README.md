@@ -63,9 +63,9 @@ The key points to populate in the compose file are the rc port, user and passwor
 
 ### rclone configuration
 
-Before the auto-mount container will work, we need to first generate an rclone.conf file. This can be done from the WebUI **however** this will fail for any remote that uses an OAuth 2.0 auto-code flow. Even doing it from the command line on a direct install of rclone can hit a dead end with some providers if you are running on a headless machine. See [Limitations](##Limitations) for more details.
+Before the auto-mount container will work, we need to first generate an rclone.conf file. This can be done from the WebUI **however** this will fail for any remote that uses an OAuth 2.0 auto-code flow. Even doing it from the command line on a direct install of rclone can hit a dead end with some providers if you are running on a headless machine. See [Limitations](#Limitations) for more details.
 
-By far the easiest way to generate an rclone.conf is to download the rclone binary directly (ensure you are using the same version as packaged in their Docker image unless you specify a specific version tag in your compose) and use the interactive `rclone config` command. Follow [their documentation](https://rclone.org/commands/rclone_config/) for configuring a remote. Once complete, you can just copy this.conf to the ./config directory we created in [Pre-work](###Pre-work)
+By far the easiest way to generate an rclone.conf is to download the rclone binary directly (ensure you are using the same version as packaged in their Docker image unless you specify a specific version tag in your compose) and use the interactive `rclone config` command. Follow [their documentation](https://rclone.org/commands/rclone_config/) for configuring a remote. Once complete, you can just copy this.conf to the ./config directory we created in [Pre-work](#Pre-work)
 
 ### Initializer configuration
 
@@ -141,7 +141,7 @@ services:
 
 There are two main limitations of this configuration; one is inherent to the rclone WebGUI and the other is related to how the "parent" RC remote handles mounts through the UI.
 
-1. As mentioned during our [rclone configuration](###rclone-configuration), OAuth 2.0 remotes with auth-code flows don't work in the UI. This is related to how the WebGUI handles the authorization code redirect.
+1. As mentioned during our [rclone configuration](#rclone-configuration), OAuth 2.0 remotes with auth-code flows don't work in the UI. This is related to how the WebGUI handles the authorization code redirect.
 2. Adding remotes directly through the UI is fully functional, but they will not auto-mount on a system boot because the mounts.json is not updated during this action. As far as I am aware, the rc mount/listmounts endpoint provides the filesystem and mount point, but not the mountOpt and vfsOpt blocks submitted when the mount was created.
 
 ## Acknowledgements
