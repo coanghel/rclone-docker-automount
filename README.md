@@ -42,7 +42,7 @@ wget https://github.com/coanghel/rclone-docker-automount/blob/master/mounts.json
 
 ### Compose Configuration
 
-The key points to populate in the compose file are the rc port, user and password. Note that these need to be supplied for both containers and that we are passing `:PORT` for --rc-addr, not just `PORT`
+The key points to populate in the compose file are the initializer volume (for accessing mounts.json), rc port, user and password. Note that the authentication credentials need to be supplied for both containers and that we are passing `:PORT` for --rc-addr, not just `PORT`
 
 ```
 ...
@@ -58,6 +58,8 @@ The key points to populate in the compose file are the rc port, user and passwor
       - RCLONE_USERNAME=AGOODUSERNAME
       - RCLONE_PASSWORD=AGOODPASSWORD
       - RCLONE_PORT=5572
+    volumes:
+      - /docker/rclone/initializer:/app
 ...
 ```
 
