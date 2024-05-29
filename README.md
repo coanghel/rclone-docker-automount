@@ -31,13 +31,13 @@ mkdir cache && mkdir config && mkdir logs
 Then we can create or download the [docker-compose.yml](docker-compose.yml) in this repo
 
 ```
-wget https://github.com/coanghel/rclone-docker-automount/blob/master/docker-compose.yml
+wget https://raw.githubusercontent.com/coanghel/rclone-docker-automount/master/docker-compose.yml
 ```
 
 The same goes for the [mounts.json](mounts.json)
 
 ```
-wget https://github.com/coanghel/rclone-docker-automount/blob/master/mounts.json
+wget https://raw.githubusercontent.com/coanghel/rclone-docker-automount/master/mounts.json
 ```
 
 ### Compose Configuration
